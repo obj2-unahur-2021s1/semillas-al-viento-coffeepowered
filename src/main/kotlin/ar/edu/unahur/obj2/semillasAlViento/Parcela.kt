@@ -25,10 +25,14 @@ class Parcela(val ancho: Int, val largo: Int, val horasSolPorDia: Int) {
   }
 }
 
+//Consistencia, una agricultora no tiene que estar acá con la clase parcela.
 class Agricultora(val parcelas: MutableList<Parcela>) {
+  //No se pide esto. Simplicidad, YAGNI
   var ahorrosEnPesos = 20000
 
   // Suponemos que una parcela vale 5000 pesos
+
+  //Simplicidad, YAGNI. No se necesita nada de esto
   fun comprarParcela(parcela: Parcela) {
     if (ahorrosEnPesos >= 5000) {
       parcelas.add(parcela)
@@ -36,6 +40,7 @@ class Agricultora(val parcelas: MutableList<Parcela>) {
     }
   }
 
+  //Cohesión. Muchas cosas para resolver. Mejor hacerlo por parte y hacer un filtro de todas las parcelas que sean semilleras y con eso hacer un método que diga si todas las parcelas dan semillias
   fun parcelasSemilleras() =
     parcelas.filter {
       parcela -> parcela.plantas.all {
@@ -44,7 +49,9 @@ class Agricultora(val parcelas: MutableList<Parcela>) {
     }
 
   fun plantarEstrategicamente(planta: Planta) {
+    //Simplicidad, YAGNI. No hace falta el val ni cantidadPlantas, se tenía que usar la cantidad de plantas que había en la lista de esa parcela
     val laElegida = parcelas.maxBy { it.cantidadMaximaPlantas() - it.cantidadPlantas }!!
+    //Abstraccion, Rehusabilidad. Se tenía que usar el método de plantar que había en parcela, no crear uno nuevo
     laElegida.plantas.add(planta)
   }
 }
